@@ -1,0 +1,90 @@
+/*****************
+ *      AUTHOR G SAM *****************
+ * *******************************
+ *      THALAPATHY VIJAY 
+ * *********************************
+ *      MASTER *********************/
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+struct node
+{
+    struct node *lchild,*rchild;
+    ll data;
+}*root=NULL;
+
+void insert(ll x)
+{
+    struct node *p=new node;
+    if(root==NULL)
+    {
+        p->lchild=p->rchild=NULL;
+        p->data=x;
+        root=p;
+    }
+    else
+    {
+        struct node *q,*r;
+        q=root;
+        r=NULL;
+        ll k=0;
+        while(q!=NULL)
+        {
+            r=q;
+            if(q->data>x)
+             q=q->lchild;
+            else if(q->data<x)
+             q=q->rchild;
+            else
+            {
+                k=1;
+                break;
+            }
+        }
+        if(k==1);
+        else
+        {
+            p->lchild=p->rchild=NULL;
+            p->data=x;
+            if(r->data>x)
+             r->lchild=p;
+            else
+             r->rchild=p;
+        }
+    }
+}
+
+ll m=INT_MAX,key;
+vector<ll> a;
+void inorder(struct node *p)
+{
+    if(p!=NULL)
+    {inorder(p->lchild);
+    if(p->data>=key)
+    {
+        if(p->data<m)
+         m=p->data;
+    }
+    inorder(p->rchild);
+    }
+    else
+     return ;
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    ll n;
+    cin>>n;
+    while(n--)
+    {
+        ll x;
+        cin>>x;
+        insert(x);
+    }
+    cin>>key;
+    inorder(root);
+    cout<<m;
+    return 0;
+}
